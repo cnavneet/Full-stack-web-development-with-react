@@ -8,6 +8,24 @@ import {DISHES} from '../shared/dishes';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import Home from './HomeComponent';
 import {Icon} from 'react-native-elements';
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchLeaders, fetchPromos } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    fetchDishes: () => dispatch(fetchDishes()),
+    fetchComments: () => dispatch(fetchComments()),
+    fetchLeaders: () => dispatch(fetchLeaders()),
+    fetchPromotions: () => dispatch(fetchPromos())
+});
 
 const MenuNavigator = createStackNavigator({
     Menu: { screen: Menu,
@@ -184,6 +202,13 @@ class Main extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.fetchDishes();
+        this.props.fetchComments();
+        this.props.fetchLeaders();
+        this.props.fetchLeaders();
+    }
+
     onDishSelect(dishId) {
         this.setState({selectedDish: dishId})
     }
@@ -221,4 +246,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
