@@ -22,6 +22,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    addComment:(dishId, rating, comment, author) => dispatch(addComment(dishId, rating, comment, author)),
+    postComment:(dishId, rating, comment, author) => dispatch(postComment(dishId, rating, comment, author)),
     fetchDishes: () => dispatch(fetchDishes()),
     fetchComments: () => dispatch(fetchComments()),
     fetchLeaders: () => dispatch(fetchLeaders()),

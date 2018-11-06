@@ -209,6 +209,30 @@
       "comment": "This is a test!",
       "date": "2018-09-17T10:49:03.654Z",
       "id": 20
+    },
+    {
+      "dishId": 0,
+      "rating": 5,
+      "author": "Navneet",
+      "comment": "This is a test comment!",
+      "date": "2018-11-06T07:06:53.956Z",
+      "id": 21
+    },
+    {
+      "dishId": 0,
+      "rating": 3,
+      "author": " T",
+      "comment": "Dgy",
+      "date": "2018-11-06T07:07:38.835Z",
+      "id": 22
+    },
+    {
+      "dishId": 3,
+      "rating": 5,
+      "author": "Nav",
+      "comment": "Test,test!",
+      "date": "2018-11-06T07:13:28.876Z",
+      "id": 23
     }
   ],
   "promotions": [
