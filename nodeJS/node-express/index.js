@@ -2,6 +2,7 @@ const express = require('express'),
         http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const dishRouter = require('./routes/dishRouter');
 
 const hostname = "localhost";
 const port = "3000";
@@ -9,6 +10,7 @@ const port = "3000";
 const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use('/dishes', dishRouter);
 
 app.all('/dishes', (req, res, next) => {
     res.statusCode = 200;
