@@ -29,6 +29,16 @@ connect.then((db) => {
 
 var app = express();
 
+// Secure traffic only
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  else {
+    res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
+  }
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -49,6 +59,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
 function auth (req, res, next) {
   console.log(req.user);
 
@@ -63,31 +78,6 @@ function auth (req, res, next) {
 }
 
 app.use(auth);
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-function auth (req, res, next) {
-  console.log(req.session);
-
-if(!req.session.user) {
-    var err = new Error('You are not authenticated!');
-    err.status = 403;
-    return next(err);
-}
-else {
-  if (req.session.user === 'authenticated') {
-    next();
-  }
-  else {
-    var err = new Error('You are not authenticated!');
-    err.status = 403;
-    return next(err);
-  }
-}
-}
 
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
