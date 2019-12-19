@@ -36,11 +36,18 @@ favoriteRouter.route('/')
             }
             favorite.save()
             .then((favorite) => {
-                console.log('Favorite Created ', favorite);
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(favorite);
-            }, (err) => next(err)); 
+                Favorites.findById(favorite._id)
+                .populate('user')
+                .populate('dishes')
+                .then((favorite) => {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(favorite);
+                })
+            })
+            .catch((err) => {
+                return next(err);
+            }); 
         }
         else {
             Favorites.create({"user": req.user._id, "dishes": req.body})
